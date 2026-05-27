@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("operator")
+  region    String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions PointTransaction[]
+  auditLogs    AuditLog[]
+}
+
+model Customer {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String   @unique
+  region       String
+  totalSpent   Float    @default(0)
+  currentTier  Int      @default(4)
+  totalBonus   Float    @default(0)
+  usableBonus  Float    @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  transactions PointTransaction[]
+
+  @@index([phone])
+  @@index([region])
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  name      String
+  price     Float
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  transactions PointTransaction[]
+}
+
+model PointTransaction {
+  id             String   @id @default(cuid())
+  customerId     String
+  productId      String
+  operatorId     String
+  amount         Float
+  percentUsed    Int
+  earnedBonus    Float
+  usedBonus      Float    @default(0)
+  remainingBonus Float
+  createdAt      DateTime @default(now())
+
+  customer Customer @relation(fields: [customerId], references: [id])
+  product  Product  @relation(fields: [productId], references: [id])
+  operator User     @relation(fields: [operatorId], references: [id])
+
+  @@index([customerId])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  detail    String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
