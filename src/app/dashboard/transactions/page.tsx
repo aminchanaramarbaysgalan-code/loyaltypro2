@@ -215,4 +215,4 @@ export default function TransactionsPage() {
                             </main>
                 </div>
             )
-}</div>
+}
