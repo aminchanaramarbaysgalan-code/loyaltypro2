@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 import CustomersClient from './CustomersClient'
 
 export const dynamic = 'force-dynamic'
