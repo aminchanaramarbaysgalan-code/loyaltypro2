@@ -79,62 +79,62 @@ export default function TransactionsPage() {
                 <div className="flex h-screen bg-gray-100">
                             <aside className="w-56 bg-white border-r flex flex-col flex-shrink-0">
                                             <div className="p-4 border-b">
-                                                                <div className="font-semibold text-sm">LoyaltyPro</div>div>
-                                                                <div className="text-xs text-gray-400 mt-1">Бонус удирдлага</div>div>
-                                            </div>div>
+                                                                <div className="font-semibold text-sm">LoyaltyPro</div>
+                                                                <div className="text-xs text-gray-400 mt-1">Бонус удирдлага</div>
+                                            </div>
                                             <nav className="p-2 flex-1">
-                                                                <div className="text-xs text-gray-400 px-2 py-2 uppercase">Үндсэн</div>div>
-                                                                <a href="/dashboard" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Хяналтын самбар</a>a>
-                                                                <a href="/dashboard/sale" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Борлуулалт</a>a>
-                                                                <a href="/dashboard/customers" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Хэрэглэгчид</a>a>
-                                                                <a href="/dashboard/transactions" className="block px-3 py-2 rounded-lg text-sm bg-blue-50 text-blue-600 mb-1">Гүйлгээ</a>a>
-                                                                <div className="text-xs text-gray-400 px-2 py-2 uppercase mt-2">Бүс нутаг</div>div>
-                                                                <a href="/dashboard/region/west" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Баруун бүс</a>a>
-                                                                <a href="/dashboard/region/east" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Зүүн бүс</a>a>
-                                                                <a href="/dashboard/region/south" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Урд бүс</a>a>
-                                                                <a href="/dashboard/region/center" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Төв бүс</a>a>
-                                                                <div className="text-xs text-gray-400 px-2 py-2 uppercase mt-2">Систем</div>div>
-                                                                <a href="/dashboard/products" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Бүтээгдэхүүн</a>a>
-                                                                <a href="/dashboard/reports" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Тайлан</a>a>
-                                            </nav>nav>
+                                                                <div className="text-xs text-gray-400 px-2 py-2 uppercase">Үндсэн</div>
+                                                                <a href="/dashboard" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Хяналтын самбар</a>
+                                                                <a href="/dashboard/sale" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Борлуулалт</a>
+                                                                <a href="/dashboard/customers" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Хэрэглэгчид</a>
+                                                                <a href="/dashboard/transactions" className="block px-3 py-2 rounded-lg text-sm bg-blue-50 text-blue-600 mb-1">Гүйлгээ</a>
+                                                                <div className="text-xs text-gray-400 px-2 py-2 uppercase mt-2">Бүс нутаг</div>
+                                                                <a href="/dashboard/region/west" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Баруун бүс</a>
+                                                                <a href="/dashboard/region/east" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Зүүн бүс</a>
+                                                                <a href="/dashboard/region/south" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Урд бүс</a>
+                                                                <a href="/dashboard/region/center" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Төв бүс</a>
+                                                                <div className="text-xs text-gray-400 px-2 py-2 uppercase mt-2">Систем</div>
+                                                                <a href="/dashboard/products" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Бүтээгдэхүүн</a>
+                                                                <a href="/dashboard/reports" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1">Тайлан</a>
+                                            </nav>
                                             <div className="p-3 border-t flex items-center gap-2">
-                                                                <div className="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-semibold">АД</div>div>
+                                                                <div className="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-semibold">АД</div>
                                                                 <div>
-                                                                                        <div className="text-xs font-semibold text-gray-700">Администратор</div>div>
-                                                                                        <div className="text-xs text-gray-400">Супер админ</div>div>
-                                                                </div>div>
-                                            </div>div>
-                            </aside>aside>
+                                                                                        <div className="text-xs font-semibold text-gray-700">Администратор</div>
+                                                                                        <div className="text-xs text-gray-400">Супер админ</div>
+                                                                </div>
+                                            </div>
+                            </aside>
                 
                             <main className="flex-1 flex flex-col overflow-hidden">
                                             <header className="h-12 bg-white border-b flex items-center px-6">
-                                                                <h1 className="text-sm font-semibold">Гүйлгээний жагсаалт</h1>h1>
-                                            </header>header>
+                                                                <h1 className="text-sm font-semibold">Гүйлгээний жагсаалт</h1>
+                                            </header>
                             
                                             <div className="flex-1 overflow-y-auto p-4">
                                                                 <div className="flex gap-3 mb-4">
                                                                                         <div className="bg-white rounded-xl border p-4 flex-1">
-                                                                                                                    <div className="text-xl font-semibold text-green-600">{totalEarned.toLocaleString()}</div>div>
-                                                                                                                    <div className="text-xs text-gray-400 mt-1">Нийт хуримтлагдсан бонус</div>div>
-                                                                                            </div>div>
+                                                                                                                    <div className="text-xl font-semibold text-green-600">{totalEarned.toLocaleString()}</div>
+                                                                                                                    <div className="text-xs text-gray-400 mt-1">Нийт хуримтлагдсан бонус</div>
+                                                                                            </div>
                                                                                         <div className="bg-white rounded-xl border p-4 flex-1">
-                                                                                                                    <div className="text-xl font-semibold text-purple-600">{totalUsed.toLocaleString()}</div>div>
-                                                                                                                    <div className="text-xs text-gray-400 mt-1">Нийт ашигласан бонус</div>div>
-                                                                                            </div>div>
-                                                                </div>div>
+                                                                                                                    <div className="text-xl font-semibold text-purple-600">{totalUsed.toLocaleString()}</div>
+                                                                                                                    <div className="text-xs text-gray-400 mt-1">Нийт ашигласан бонус</div>
+                                                                                            </div>
+                                                                </div>
                                             
                                                                 <div className="flex gap-3 mb-3">
                                                                                         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Нэр эсвэл утас хайх..." className="flex-1 px-3 py-2 border rounded-lg text-sm bg-white outline-none" />
                                                                                         <select value={type} onChange={e => setType(e.target.value)} className="px-3 py-2 border rounded-lg text-sm bg-white outline-none">
-                                                                                                                    <option value="">Бүх төрөл</option>option>
-                                                                                                                    <option value="earned">Хуримтлагдсан</option>option>
-                                                                                                                    <option value="used">Ашигласан</option>option>
-                                                                                            </select>select>
+                                                                                                                    <option value="">Бүх төрөл</option>
+                                                                                                                    <option value="earned">Хуримтлагдсан</option>
+                                                                                                                    <option value="used">Ашигласан</option>
+                                                                                            </select>
                                                                                         <div className="flex border rounded-lg overflow-hidden bg-white">
-                                                                                                                    <button onClick={() => setView('table')} className={"px-4 py-2 text-sm " + (view === 'table' ? 'bg-blue-50 text-blue-600' : 'text-gray-500')}>Хүснэгт</button>button>
-                                                                                                                    <button onClick={() => setView('user')} className={"px-4 py-2 text-sm " + (view === 'user' ? 'bg-blue-50 text-blue-600' : 'text-gray-500')}>Хэрэглэгч</button>button>
-                                                                                            </div>div>
-                                                                </div>div>
+                                                                                                                    <button onClick={() => setView('table')} className={"px-4 py-2 text-sm " + (view === 'table' ? 'bg-blue-50 text-blue-600' : 'text-gray-500')}>Хүснэгт</button>
+                                                                                                                    <button onClick={() => setView('user')} className={"px-4 py-2 text-sm " + (view === 'user' ? 'bg-blue-50 text-blue-600' : 'text-gray-500')}>Хэрэглэгч</button>
+                                                                                            </div>
+                                                                </div>
                                             
                                                 {view === 'table' ? (
                                             <div className="bg-white rounded-xl border overflow-hidden">
@@ -142,41 +142,41 @@ export default function TransactionsPage() {
                                                                                 <div key={key}>
                                                                                                                     <div className="px-4 py-2 bg-gray-50 border-b text-xs text-gray-400 font-medium">
                                                                                                                         {(() => { const d = items[0].date; return d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0') + ' (' + DAYS[d.getDay()] + ')' })()}
-                                                                                                                        </div>div>
+                                                                                                                        </div>
                                                                                                                     <table className="w-full">
                                                                                                                                                             <tbody>
                                                                                                                                                                                                         {items.map((t, i) => (
                                                                                                                                     <tr key={i} className="border-b last:border-0 hover:bg-gray-50 cursor-pointer" onClick={() => router.push("/dashboard/transactions/" + t.id)}>
                                                                                                                                                                                         <td className="px-4 py-3">
-                                                                                                                                                                                                                                                <div className="text-sm font-medium text-gray-800">{t.name}</div>div>
-                                                                                                                                                                                                                                                <div className="text-xs text-gray-400">{t.phone} · {REGIONS[t.region]}</div>div>
-                                                                                                                                                                                                                                            </td>td>
-                                                                                                                                                                                        <td className="px-4 py-3 text-sm text-gray-700">{t.prod}</td>td>
+                                                                                                                                                                                                                                                <div className="text-sm font-medium text-gray-800">{t.name}</div>
+                                                                                                                                                                                                                                                <div className="text-xs text-gray-400">{t.phone} · {REGIONS[t.region]}</div>
+                                                                                                                                                                                                                                            </td>
+                                                                                                                                                                                        <td className="px-4 py-3 text-sm text-gray-700">{t.prod}</td>
                                                                                                                                                                                         <td className="px-4 py-3">
-                                                                                                                                                                                                                                                <div className="text-sm font-medium text-gray-800">{fmt(t.amt)}</div>div>
-                                                                                                                                                                                                                                                <div className="text-xs text-gray-400">{t.pct}%</div>div>
-                                                                                                                                                                                                                                            </td>td>
+                                                                                                                                                                                                                                                <div className="text-sm font-medium text-gray-800">{fmt(t.amt)}</div>
+                                                                                                                                                                                                                                                <div className="text-xs text-gray-400">{t.pct}%</div>
+                                                                                                                                                                                                                                            </td>
                                                                                                                                                                                         <td className="px-4 py-3">
                                                                                                                                                                                                                                                 <span className={"text-xs px-2 py-0.5 rounded-full " + (PAY_COLORS[t.payMethod] || 'bg-gray-50 text-gray-600')}>
                                                                                                                                                                                                                                                                                                             {PAY_LABELS[t.payMethod] || t.payMethod}
-                                                                                                                                                                                                                                                                                                        </span>span>
-                                                                                                                                                                                                                                            </td>td>
+                                                                                                                                                                                                                                                                                                        </span>
+                                                                                                                                                                                                                                            </td>
                                                                                                                                                                                         <td className="px-4 py-3">
-                                                                                                                                                                                                                                                <div className="text-xs text-gray-600">{t.cashier}</div>div>
-                                                                                                                                                                                                                                                {t.note ? <div className="text-xs text-gray-400 mt-0.5 truncate max-w-xs">{t.note}</div>div> : null}
-                                                                                                                                                                                                                                            </td>td>
+                                                                                                                                                                                                                                                <div className="text-xs text-gray-600">{t.cashier}</div>
+                                                                                                                                                                                                                                                {t.note ? <div className="text-xs text-gray-400 mt-0.5 truncate max-w-xs">{t.note}</div> : null}
+                                                                                                                                                                                                                                            </td>
                                                                                                                                                                                         <td className="px-4 py-3 text-right">
-                                                                                                                                                                                                                                                {t.earned > 0 && <div className="text-xs text-green-600">+{t.earned.toLocaleString()}</div>div>}
-                                                                                                                                                                                                                                                {t.used > 0 && <div className="text-xs text-purple-600">-{t.used.toLocaleString()}</div>div>}
-                                                                                                                                                                                                                                            </td>td>
-                                                                                                                                                                                        <td className="px-4 py-3 text-xs text-gray-400 text-right">{fmtDate(t.date)}</td>td>
-                                                                                                                                        </tr>tr>
+                                                                                                                                                                                                                                                {t.earned > 0 && <div className="text-xs text-green-600">+{t.earned.toLocaleString()}</div>}
+                                                                                                                                                                                                                                                {t.used > 0 && <div className="text-xs text-purple-600">-{t.used.toLocaleString()}</div>}
+                                                                                                                                                                                                                                            </td>
+                                                                                                                                                                                        <td className="px-4 py-3 text-xs text-gray-400 text-right">{fmtDate(t.date)}</td>
+                                                                                                                                        </tr>
                                                                                                                                 ))}
-                                                                                                                                                                </tbody>tbody>
-                                                                                                                        </table>table>
-                                                                                    </div>div>
+                                                                                                                                                                </tbody>
+                                                                                                                        </table>
+                                                                                    </div>
                                                                             ))}
-                                            </div>div>
+                                            </div>
                                         ) : (
                                             <div className="space-y-3">
                                                 {filtered.map(t => (
@@ -184,35 +184,35 @@ export default function TransactionsPage() {
                                                                                                                     <div className="flex items-center gap-3 mb-2">
                                                                                                                                                             <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-semibold">
                                                                                                                                                                                                         {t.name.split(' ').map((w: string) => w[0]).join('').slice(0, 2)}
-                                                                                                                                                                </div>div>
+                                                                                                                                                                </div>
                                                                                                                                                             <div className="flex-1">
-                                                                                                                                                                                                        <div className="text-sm font-semibold text-gray-800">{t.name}</div>div>
-                                                                                                                                                                                                        <div className="text-xs text-gray-400">{t.phone} · {REGIONS[t.region]}</div>div>
-                                                                                                                                                                </div>div>
-                                                                                                                                                            <div className="text-sm font-medium text-gray-800">{fmt(t.amt)}</div>div>
-                                                                                                                        </div>div>
+                                                                                                                                                                                                        <div className="text-sm font-semibold text-gray-800">{t.name}</div>
+                                                                                                                                                                                                        <div className="text-xs text-gray-400">{t.phone} · {REGIONS[t.region]}</div>
+                                                                                                                                                                </div>
+                                                                                                                                                            <div className="text-sm font-medium text-gray-800">{fmt(t.amt)}</div>
+                                                                                                                        </div>
                                                                                                                     <div className="flex items-center gap-2 flex-wrap">
-                                                                                                                                                            <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t.prod}</span>span>
+                                                                                                                                                            <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t.prod}</span>
                                                                                                                                                             <span className={"text-xs px-2 py-0.5 rounded-full " + (PAY_COLORS[t.payMethod] || 'bg-gray-50 text-gray-600')}>
                                                                                                                                                                                                         {PAY_LABELS[t.payMethod] || t.payMethod}
-                                                                                                                                                                </span>span>
-                                                                                                                                                            <span className="text-xs text-gray-400">{t.cashier}</span>span>
+                                                                                                                                                                </span>
+                                                                                                                                                            <span className="text-xs text-gray-400">{t.cashier}</span>
                                                                                                                         {t.items.length > 0 && (
-                                                                                                                                <span className="text-xs text-gray-400">{t.items.length} бүтээгдэхүүн</span>span>
+                                                                                                                                <span className="text-xs text-gray-400">{t.items.length} бүтээгдэхүүн</span>
                                                                                                                                                             )}
-                                                                                                                        {t.note ? <span className="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">{t.note}</span>span> : null}
-                                                                                                                        </div>div>
+                                                                                                                        {t.note ? <span className="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">{t.note}</span> : null}
+                                                                                                                        </div>
                                                                                                                     <div className="flex items-center gap-3 mt-2">
-                                                                                                                        {t.earned > 0 && <span className="text-xs text-green-600">+{t.earned.toLocaleString()} нэмэгдсэн</span>span>}
-                                                                                                                        {t.used > 0 && <span className="text-xs text-purple-600">-{t.used.toLocaleString()} хасагдсан</span>span>}
-                                                                                                                                                            <span className="text-xs text-gray-400 ml-auto">{fmtDate(t.date)}</span>span>
-                                                                                                                        </div>div>
-                                                                                    </div>div>
+                                                                                                                        {t.earned > 0 && <span className="text-xs text-green-600">+{t.earned.toLocaleString()} нэмэгдсэн</span>}
+                                                                                                                        {t.used > 0 && <span className="text-xs text-purple-600">-{t.used.toLocaleString()} хасагдсан</span>}
+                                                                                                                                                            <span className="text-xs text-gray-400 ml-auto">{fmtDate(t.date)}</span>
+                                                                                                                        </div>
+                                                                                    </div>
                                                                             ))}
-                                            </div>div>
+                                            </div>
                                                                 )}
-                                            </div>div>
-                            </main>main>
-                </div>div>
+                                            </div>
+                            </main>
+                </div>
             )
 }</div>
