@@ -16,7 +16,7 @@ function getTier(s: number) {
   return 4
 }
 
-function fmt(n: number) { return n.toLocaleString() + '₮' }
+function fmt(n: number) { return Math.round(n).toLocaleString() + '₮' }
 function fmtNum(n: number) { return Math.round(n).toLocaleString() }
 
 export default function SalePage() {
@@ -65,15 +65,15 @@ export default function SalePage() {
     }
   }, [])
 
+  // Ашиглах боломжтой = нийт бонусын 50%
+  const usable = customer ? Math.floor(Math.round(customer.totalBonus) * 0.5) : 0
+
   const prod = PRODUCTS.find(p => p.id === parseInt(prodId))
   const tier = customer ? getTier(customer.totalSpent) : 4
-  // Бонус тооцоо: бүтээгдэхүүний үнэ * tier% = олгох бонус
   const earned = prod ? Math.floor(prod.price * tier / 100) : 0
-  const useBonusVal = Math.min(useBonus, customer?.usableBonus || 0)
-  // Шинэ нийт бонус = хуучин + олгосон - ашигласан
+  const useBonusVal = Math.min(useBonus, usable)
   const newTotalBonus = customer ? Math.round(customer.totalBonus) + earned - useBonusVal : 0
-  // Ашиглах боломжтой = нийт бонусын 50%
-  const newUsableBonus = Math.floor(newTotalBonus * 0.5)
+  const newUsable = Math.floor(newTotalBonus * 0.5)
 
   function handlePhoneChange(val: string) {
     const clean = val.replace(/\D/g, '').slice(0, 8)
@@ -90,11 +90,12 @@ export default function SalePage() {
   }
 
   function selectCustomer(c: any) {
-    setPhone(String(c.phone))
-    setCustomer({ ...c })
+    setPhone(String(c.phone).replace('.0',''))
+    setCustomer({ ...c, totalBonus: Math.round(c.totalBonus) })
     setNotFound(false)
     setShowSuggestions(false)
     setSuggestions([])
+    setUseBonus(0)
   }
 
   async function search() {
@@ -105,35 +106,27 @@ export default function SalePage() {
       const res = await fetch('/api/customers/search?q=' + encodeURIComponent(phone))
       if (res.ok) {
         const data = await res.json()
-        const exact = data.find((c: any) => String(c.phone) === phone)
-        if (exact) { setCustomer({ ...exact }); setNotFound(false) }
-        else { setCustomer(null); setNotFound(true) }
+        const exact = data.find((c: any) => String(c.phone).replace('.0','') === phone)
+        if (exact) {
+          setCustomer({ ...exact, totalBonus: Math.round(exact.totalBonus) })
+          setNotFound(false)
+        } else {
+          setCustomer(null); setNotFound(true)
+        }
       }
     } catch {
       setCustomer(null); setNotFound(true)
     } finally {
       setIsSearching(false)
+      setUseBonus(0)
     }
   }
 
   function doSale() {
     if (!customer || !prod) return
-    const tx = {
-      name: customer.name,
-      prod: prod.name,
-      amt: prod.price,
-      earned,
-      usedBonus: useBonusVal,
-      time: new Date().toLocaleTimeString()
-    }
+    const tx = { name: customer.name, prod: prod.name, amt: prod.price, earned, usedBonus: useBonusVal, time: new Date().toLocaleTimeString() }
     setTodayTxs(p => [tx, ...p])
-    const updated = {
-      ...customer,
-      totalSpent: customer.totalSpent + prod.price,
-      totalBonus: newTotalBonus,
-      usableBonus: newUsableBonus,
-    }
-    setCustomer(updated)
+    setCustomer({ ...customer, totalSpent: customer.totalSpent + prod.price, totalBonus: newTotalBonus })
     setProdId('')
     setUseBonus(0)
   }
@@ -205,7 +198,10 @@ export default function SalePage() {
                                 <div className="text-sm font-medium text-gray-800">{c.name}</div>
                                 <div className="text-xs text-gray-400">{String(c.phone).replace('.0','')}</div>
                               </div>
-                              <span className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded-full">{getTier(c.totalSpent)}%</span>
+                              <div className="text-right shrink-0">
+                                <div className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded-full">{getTier(c.totalSpent)}%</div>
+                                <div className="text-xs text-purple-500 mt-0.5">{fmtNum(Math.floor(Math.round(c.totalBonus) * 0.5))}</div>
+                              </div>
                             </button>
                           ))}
                         </div>
@@ -229,14 +225,14 @@ export default function SalePage() {
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-center">
                       <div className="bg-gray-50 rounded-lg p-2">
-                        <div className="text-xs font-semibold text-gray-800">{fmt(Math.round(customer.totalSpent))}</div>
+                        <div className="text-xs font-semibold text-gray-800">{fmt(customer.totalSpent)}</div>
                         <div className="text-xs text-gray-400 mt-0.5">Худалдан авалтын дүн</div>
                       </div>
                       <div className="bg-green-50 rounded-lg p-2">
-                        <div className="text-xs font-semibold text-green-700">
-                          {fmtNum(customer.totalBonus)}
-                          <span className="text-gray-400 font-normal mx-0.5">/</span>
-                          <span className="text-purple-600">{fmtNum(customer.usableBonus)}</span>
+                        <div className="text-xs font-semibold">
+                          <span className="text-green-700">{fmtNum(customer.totalBonus)}</span>
+                          <span className="text-gray-400 mx-1">/</span>
+                          <span className="text-purple-600">{fmtNum(usable)}</span>
                         </div>
                         <div className="text-xs text-gray-400 mt-0.5">Нийт бонус / Ашиглах</div>
                       </div>
@@ -260,9 +256,17 @@ export default function SalePage() {
                 <div className="mb-4">
                   <label className="text-xs text-gray-500 mb-1 block">
                     Бонус ашиглах
-                    {customer && <span className="ml-1 text-purple-500">(боломжтой: {fmtNum(customer.usableBonus)})</span>}
+                    {customer && <span className="ml-1 text-purple-600 font-medium">(боломжтой: {fmtNum(usable)})</span>}
                   </label>
-                  <input type="number" min={0} max={customer?.usableBonus || 0} value={useBonus} onChange={e => setUseBonus(parseInt(e.target.value) || 0)} disabled={!customer} className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:border-blue-400 disabled:bg-gray-50" />
+                  <input
+                    type="number"
+                    min={0}
+                    max={usable}
+                    value={useBonus}
+                    onChange={e => setUseBonus(Math.min(parseInt(e.target.value) || 0, usable))}
+                    disabled={!customer}
+                    className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:border-blue-400 disabled:bg-gray-50"
+                  />
                 </div>
                 {prod && customer && (
                   <div className="bg-blue-50 rounded-lg p-3 mb-3 text-xs space-y-1.5">
@@ -282,8 +286,10 @@ export default function SalePage() {
                     )}
                     <div className="border-t border-blue-200 pt-1.5 flex justify-between">
                       <span className="text-gray-500">Шинэ бонус / Ашиглах:</span>
-                      <span className="font-semibold text-blue-600">
-                        {fmtNum(newTotalBonus)} / <span className="text-purple-600">{fmtNum(newUsableBonus)}</span>
+                      <span className="font-semibold">
+                        <span className="text-blue-600">{fmtNum(newTotalBonus)}</span>
+                        <span className="text-gray-400 mx-1">/</span>
+                        <span className="text-purple-600">{fmtNum(newUsable)}</span>
                       </span>
                     </div>
                   </div>
