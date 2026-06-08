@@ -6,11 +6,12 @@ export const dynamic = 'force-dynamic'
 export default async function CustomersPage({
   searchParams,
 }: {
-  searchParams: { search?: string; region?: string; page?: string }
+  searchParams: Promise<{ search?: string; region?: string; page?: string }>
 }) {
-  const search = searchParams.search || ''
-  const region = searchParams.region || ''
-  const page = parseInt(searchParams.page || '1')
+  const params = await searchParams
+  const search = params.search || ''
+  const region = params.region || ''
+  const page = parseInt(params.page || '1')
   const pageSize = 50
 
   const where: any = {}
