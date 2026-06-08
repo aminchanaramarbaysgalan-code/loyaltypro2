@@ -17,6 +17,7 @@ function getTier(s: number) {
 }
 
 function fmt(n: number) { return n.toLocaleString() + '₮' }
+function fmtNum(n: number) { return Math.round(n).toLocaleString() }
 
 export default function SalePage() {
   const [phone, setPhone] = useState('')
@@ -66,10 +67,13 @@ export default function SalePage() {
 
   const prod = PRODUCTS.find(p => p.id === parseInt(prodId))
   const tier = customer ? getTier(customer.totalSpent) : 4
+  // Бонус тооцоо: бүтээгдэхүүний үнэ * tier% = олгох бонус
   const earned = prod ? Math.floor(prod.price * tier / 100) : 0
   const useBonusVal = Math.min(useBonus, customer?.usableBonus || 0)
-  const newTotal = customer ? customer.totalBonus + earned - useBonusVal : 0
-  const newUsable = Math.floor(newTotal * 0.5)
+  // Шинэ нийт бонус = хуучин + олгосон - ашигласан
+  const newTotalBonus = customer ? Math.round(customer.totalBonus) + earned - useBonusVal : 0
+  // Ашиглах боломжтой = нийт бонусын 50%
+  const newUsableBonus = Math.floor(newTotalBonus * 0.5)
 
   function handlePhoneChange(val: string) {
     const clean = val.replace(/\D/g, '').slice(0, 8)
@@ -114,9 +118,21 @@ export default function SalePage() {
 
   function doSale() {
     if (!customer || !prod) return
-    const tx = { name: customer.name, prod: prod.name, amt: prod.price, earned, time: new Date().toLocaleTimeString() }
+    const tx = {
+      name: customer.name,
+      prod: prod.name,
+      amt: prod.price,
+      earned,
+      usedBonus: useBonusVal,
+      time: new Date().toLocaleTimeString()
+    }
     setTodayTxs(p => [tx, ...p])
-    const updated = { ...customer, totalSpent: customer.totalSpent + prod.price, totalBonus: newTotal, usableBonus: newUsable }
+    const updated = {
+      ...customer,
+      totalSpent: customer.totalSpent + prod.price,
+      totalBonus: newTotalBonus,
+      usableBonus: newUsableBonus,
+    }
     setCustomer(updated)
     setProdId('')
     setUseBonus(0)
@@ -187,7 +203,7 @@ export default function SalePage() {
                               </div>
                               <div className="flex-1 min-w-0">
                                 <div className="text-sm font-medium text-gray-800">{c.name}</div>
-                                <div className="text-xs text-gray-400">{c.phone}</div>
+                                <div className="text-xs text-gray-400">{String(c.phone).replace('.0','')}</div>
                               </div>
                               <span className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded-full">{getTier(c.totalSpent)}%</span>
                             </button>
@@ -207,14 +223,23 @@ export default function SalePage() {
                       </div>
                       <div className="flex-1">
                         <div className="text-sm font-semibold">{customer.name}</div>
-                        <div className="text-xs text-gray-400">{customer.phone}</div>
+                        <div className="text-xs text-gray-400">{String(customer.phone).replace('.0','')}</div>
                       </div>
-                      <span className="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">{getTier(customer.totalSpent)}%</span>
+                      <span className="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-semibold">{getTier(customer.totalSpent)}%</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-center">
-                      <div className="bg-gray-50 rounded-lg p-2"><div className="text-xs font-semibold">{fmt(customer.totalSpent)}</div><div className="text-xs text-gray-400">Зарцуулалт</div></div>
-                      <div className="bg-gray-50 rounded-lg p-2"><div className="text-xs font-semibold text-green-600">{customer.totalBonus.toLocaleString()}</div><div className="text-xs text-gray-400">Бонус</div></div>
-                      <div className="bg-gray-50 rounded-lg p-2"><div className="text-xs font-semibold text-purple-600">{customer.usableBonus.toLocaleString()}</div><div className="text-xs text-gray-400">Ашиглах</div></div>
+                    <div className="grid grid-cols-2 gap-2 text-center">
+                      <div className="bg-gray-50 rounded-lg p-2">
+                        <div className="text-xs font-semibold text-gray-800">{fmt(Math.round(customer.totalSpent))}</div>
+                        <div className="text-xs text-gray-400 mt-0.5">Худалдан авалтын дүн</div>
+                      </div>
+                      <div className="bg-green-50 rounded-lg p-2">
+                        <div className="text-xs font-semibold text-green-700">
+                          {fmtNum(customer.totalBonus)}
+                          <span className="text-gray-400 font-normal mx-0.5">/</span>
+                          <span className="text-purple-600">{fmtNum(customer.usableBonus)}</span>
+                        </div>
+                        <div className="text-xs text-gray-400 mt-0.5">Нийт бонус / Ашиглах</div>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -233,14 +258,34 @@ export default function SalePage() {
                   <input readOnly value={prod ? fmt(prod.price) : ''} placeholder="Бүтээгдэхүүн сонгоно уу" className="w-full px-3 py-2 border rounded-lg text-sm bg-gray-50 outline-none" />
                 </div>
                 <div className="mb-4">
-                  <label className="text-xs text-gray-500 mb-1 block">Бонус ашиглах</label>
+                  <label className="text-xs text-gray-500 mb-1 block">
+                    Бонус ашиглах
+                    {customer && <span className="ml-1 text-purple-500">(боломжтой: {fmtNum(customer.usableBonus)})</span>}
+                  </label>
                   <input type="number" min={0} max={customer?.usableBonus || 0} value={useBonus} onChange={e => setUseBonus(parseInt(e.target.value) || 0)} disabled={!customer} className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:border-blue-400 disabled:bg-gray-50" />
                 </div>
                 {prod && customer && (
-                  <div className="bg-blue-50 rounded-lg p-3 mb-3 text-xs">
-                    <div className="flex justify-between mb-1"><span className="text-gray-500">Олгох бонус:</span><span className="font-semibold text-green-600">+{earned.toLocaleString()}</span></div>
-                    <div className="flex justify-between mb-1"><span className="text-gray-500">Ашиглах бонус:</span><span className="font-semibold text-red-500">-{useBonusVal.toLocaleString()}</span></div>
-                    <div className="flex justify-between"><span className="text-gray-500">Шинэ бонус:</span><span className="font-semibold text-blue-600">{newTotal.toLocaleString()}</span></div>
+                  <div className="bg-blue-50 rounded-lg p-3 mb-3 text-xs space-y-1.5">
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Бүтээгдэхүүний үнэ:</span>
+                      <span className="font-semibold">{fmt(prod.price)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Олгох бонус ({tier}%):</span>
+                      <span className="font-semibold text-green-600">+{fmtNum(earned)}</span>
+                    </div>
+                    {useBonusVal > 0 && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Ашиглах бонус:</span>
+                        <span className="font-semibold text-red-500">-{fmtNum(useBonusVal)}</span>
+                      </div>
+                    )}
+                    <div className="border-t border-blue-200 pt-1.5 flex justify-between">
+                      <span className="text-gray-500">Шинэ бонус / Ашиглах:</span>
+                      <span className="font-semibold text-blue-600">
+                        {fmtNum(newTotalBonus)} / <span className="text-purple-600">{fmtNum(newUsableBonus)}</span>
+                      </span>
+                    </div>
                   </div>
                 )}
                 <button onClick={doSale} disabled={!customer || !prod} className="w-full py-2.5 bg-blue-600 text-white rounded-lg text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-blue-700">Борлуулалт бүртгэх</button>
@@ -255,7 +300,7 @@ export default function SalePage() {
                   <div className="space-y-2">
                     {todayTxs.map((tx, i) => (
                       <div key={i} className="flex items-center gap-3 py-2 border-b last:border-0">
-                        <div className="w-7 h-7 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs font-semibold">
+                        <div className="w-7 h-7 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs font-semibold flex-shrink-0">
                           {tx.name.split(' ').map((w: string) => w[0]).join('').slice(0, 2)}
                         </div>
                         <div className="flex-1">
@@ -263,7 +308,8 @@ export default function SalePage() {
                           <div className="text-xs text-gray-400">{tx.prod} · {fmt(tx.amt)}</div>
                         </div>
                         <div className="text-right">
-                          <div className="text-xs text-green-600 font-semibold">+{tx.earned.toLocaleString()}</div>
+                          <div className="text-xs text-green-600 font-semibold">+{fmtNum(tx.earned)}</div>
+                          {tx.usedBonus > 0 && <div className="text-xs text-red-400">-{fmtNum(tx.usedBonus)}</div>}
                           <div className="text-xs text-gray-400">{tx.time}</div>
                         </div>
                       </div>
