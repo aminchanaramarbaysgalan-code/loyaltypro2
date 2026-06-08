@@ -22,6 +22,10 @@ function initials(name: string) {
   return name.split(' ').map((w: string) => w[0]).join('').slice(0, 2)
 }
 
+function getUsable(totalBonus: number) {
+  return Math.floor(Math.round(totalBonus) * 0.5)
+}
+
 const tierColor: Record<number, string> = {
   4: 'bg-blue-50 text-blue-600',
   6: 'bg-green-50 text-green-600',
@@ -169,8 +173,8 @@ export default function CustomersClient({ customers, total, page, pageSize, sear
                   <th className="text-left px-4 py-3 text-xs text-gray-400 font-medium">Бүс</th>
                   <th className="text-left px-4 py-3 text-xs text-gray-400 font-medium">Tier</th>
                   <th className="text-left px-4 py-3 text-xs text-gray-400 font-medium">Зарцуулалт</th>
-                  <th className="text-left px-4 py-3 text-xs text-gray-400 font-medium">Бонус</th>
-                  <th className="text-left px-4 py-3 text-xs text-gray-400 font-medium">Ашиглах</th>
+                  <th className="text-left px-4 py-3 text-xs text-gray-400 font-medium">Нийт бонус</th>
+                  <th className="text-left px-4 py-3 text-xs text-gray-400 font-medium">Ашиглах боломж</th>
                 </tr>
               </thead>
               <tbody>
@@ -178,18 +182,19 @@ export default function CustomersClient({ customers, total, page, pageSize, sear
                   <tr><td colSpan={8} className="text-center py-10 text-gray-400 text-sm">Хэрэглэгч олдсонгүй</td></tr>
                 ) : customers.map(c => {
                   const tier = getTier(c.totalSpent)
+                  const usable = getUsable(c.totalBonus)
                   return (
                     <tr key={c.id} onClick={() => setDetail(c)} className="border-b last:border-0 hover:bg-gray-50 cursor-pointer">
                       <td className="px-4 py-3">
                         <div className="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-semibold">{initials(c.name)}</div>
                       </td>
                       <td className="px-4 py-3 text-sm font-medium text-gray-800">{c.name}</td>
-                      <td className="px-4 py-3 text-sm text-gray-500">{c.phone}</td>
-                      <td className="px-4 py-3"><span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{REGIONS[c.region || ''] || c.region || '-'}</span></td>
+                      <td className="px-4 py-3 text-sm text-gray-500">{String(c.phone).replace('.0', '')}</td>
+                      <td className="px-4 py-3"><span className={`text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full`}>{REGIONS[c.region || ''] || c.region || '-'}</span></td>
                       <td className="px-4 py-3"><span className={`text-xs px-2 py-0.5 rounded-full ${tierColor[tier]}`}>{tier}%</span></td>
                       <td className="px-4 py-3 text-sm text-gray-700">{fmt(c.totalSpent)}</td>
-                      <td className="px-4 py-3 text-sm text-green-600 font-medium">{c.totalBonus.toLocaleString()}</td>
-                      <td className="px-4 py-3 text-sm text-purple-600 font-medium">{c.usableBonus.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-sm text-green-600 font-medium">{Math.round(c.totalBonus).toLocaleString()}</td>
+                      <td className="px-4 py-3 text-sm text-purple-600 font-medium">{usable.toLocaleString()}</td>
                     </tr>
                   )
                 })}
@@ -277,7 +282,7 @@ export default function CustomersClient({ customers, total, page, pageSize, sear
               <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg font-semibold">{initials(detail.name)}</div>
               <div>
                 <div className="font-semibold text-gray-800">{detail.name}</div>
-                <div className="text-xs text-gray-400">{detail.phone} · {REGIONS[detail.region || ''] || '-'}</div>
+                <div className="text-xs text-gray-400">{String(detail.phone).replace('.0', '')} · {REGIONS[detail.region || ''] || '-'}</div>
               </div>
               <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${tierColor[getTier(detail.totalSpent)]}`}>{getTier(detail.totalSpent)}% tier</span>
             </div>
@@ -287,11 +292,11 @@ export default function CustomersClient({ customers, total, page, pageSize, sear
                 <div className="text-xs text-gray-400 mt-1">Нийт зарцуулалт</div>
               </div>
               <div className="bg-gray-50 rounded-lg p-3">
-                <div className="text-sm font-semibold text-green-600">{detail.totalBonus.toLocaleString()}</div>
+                <div className="text-sm font-semibold text-green-600">{Math.round(detail.totalBonus).toLocaleString()}</div>
                 <div className="text-xs text-gray-400 mt-1">Нийт бонус</div>
               </div>
               <div className="bg-gray-50 rounded-lg p-3">
-                <div className="text-sm font-semibold text-purple-600">{detail.usableBonus.toLocaleString()}</div>
+                <div className="text-sm font-semibold text-purple-600">{getUsable(detail.totalBonus).toLocaleString()}</div>
                 <div className="text-xs text-gray-400 mt-1">Ашиглах боломж</div>
               </div>
               <div className="bg-gray-50 rounded-lg p-3">
